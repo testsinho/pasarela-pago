@@ -1,0 +1,82 @@
+### AuthZ Service - Obtener token JWT
+POST http://localhost:3001/authorize
+Content-Type: application/json
+
+{
+  "user": "admin",
+  "password": "1234"
+}
+
+### AuthZ Service - Endpoint protegido (reemplaza <TOKEN_AQUI>)
+GET http://localhost:3001/protected
+Authorization: Bearer <TOKEN_AQUI>
+
+### Payment Processing Service - Procesar pago
+POST http://localhost:3002/process
+Content-Type: application/json
+
+{
+  "cardData": {
+    "number": "4111111111111111",
+    "exp": "12/28",
+    "cvv": "123"
+  },
+  "amount": 500,
+  "currency": "USD"
+}
+
+### Transaction Management Service - Crear transacción
+POST http://localhost:3003/transaction
+Content-Type: application/json
+
+{
+  "amount": 500,
+  "currency": "USD",
+  "token": "tok_xxx",
+  "status": "pending"
+}
+
+### Transaction Management Service - Consultar transacción
+GET http://localhost:3003/transaction/1
+
+### Transaction Management Service - Actualizar transacción
+PUT http://localhost:3003/transaction/1
+Content-Type: application/json
+
+{
+  "status": "approved"
+}
+
+### External Integration Service - Simular integración externa
+POST http://localhost:3004/external
+Content-Type: application/json
+
+{
+  "token": "tok_xxx",
+  "amount": 500,
+  "currency": "USD"
+}
+
+### Tokenization Service - Tokenizar datos
+POST http://localhost:3005/tokenize
+Content-Type: application/json
+
+{
+  "cardData": {
+    "number": "4111111111111111",
+    "exp": "12/28",
+    "cvv": "123"
+  }
+}
+
+### Tokenization Service - Detokenizar datos
+POST http://localhost:3005/detokenize
+Content-Type: application/json
+
+{
+  "token": "tok_xxx"
+}
+
+### Secret Management Service - Obtener secreto
+GET http://localhost:3006/secret/payment-api-key
+Authorization: Bearer admin-token

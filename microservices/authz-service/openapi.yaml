@@ -1,0 +1,50 @@
+openapi: 3.0.4
+info:
+  title: AuthZ Service API
+  version: 1.0.0
+  description: Servicio de autorización y generación de tokens JWT.
+servers:
+  - url: http://localhost:3001
+paths:
+  /authorize:
+    post:
+      summary: Autentica usuario y genera un JWT.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Token generado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: Credenciales inválidas.
+  /protected:
+    get:
+      summary: Endpoint protegido, requiere JWT.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Acceso autorizado.
+        '401':
+          description: Token inválido o ausente.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

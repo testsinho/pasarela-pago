@@ -1,0 +1,42 @@
+openapi: 3.0.4
+info:
+  title: External Integration Service API
+  version: 1.0.0
+  description: Servicio de simulación de integración con procesadores externos.
+servers:
+  - url: http://localhost:3004
+paths:
+  /external:
+    post:
+      summary: Simula la respuesta de un procesador externo.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                amount:
+                  type: number
+                currency:
+                  type: string
+      responses:
+        '200':
+          description: Respuesta del procesador externo.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  processorId:
+                    type: string
+  /health:
+    get:
+      summary: Verifica el estado del servicio.
+      responses:
+        '200':
+          description: Servicio operativo.

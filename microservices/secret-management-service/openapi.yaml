@@ -1,0 +1,37 @@
+openapi: 3.0.4
+info:
+  title: Secret Management Service API
+  version: 1.0.0
+  description: Servicio de gestión y entrega de secretos bajo autorización.
+servers:
+  - url: http://localhost:3006
+paths:
+  /secret/{key}:
+    get:
+      summary: Recupera un secreto seguro.
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Valor del secreto.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: string
+        '403':
+          description: Acceso denegado.
+        '404':
+          description: Secreto no encontrado.
+  /health:
+    get:
+      summary: Verifica el estado del servicio.
+      responses:
+        '200':
+          description: Servicio operativo.

@@ -1,0 +1,92 @@
+openapi: 3.0.4
+info:
+  title: Transaction Management Service API
+  version: 1.0.0
+  description: Servicio de gestión y registro de transacciones.
+servers:
+  - url: http://localhost:3003
+paths:
+  /transaction:
+    post:
+      summary: Crea una nueva transacción.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                currency:
+                  type: string
+                token:
+                  type: string
+                status:
+                  type: string
+      responses:
+        '200':
+          description: Transacción creada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /transaction/{id}:
+    get:
+      summary: Consulta una transacción por ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Transacción encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: No encontrada.
+    put:
+      summary: Actualiza una transacción por ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      responses:
+        '200':
+          description: Transacción actualizada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: No encontrada.
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+        amount:
+          type: number
+        currency:
+          type: string
+        token:
+          type: string
+        status:
+          type: string

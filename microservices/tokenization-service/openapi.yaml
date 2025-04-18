@@ -1,0 +1,60 @@
+openapi: 3.0.4
+info:
+  title: Tokenization Service API
+  version: 1.0.0
+  description: Servicio de tokenización y detokenización de datos sensibles.
+servers:
+  - url: http://localhost:3005
+paths:
+  /tokenize:
+    post:
+      summary: Tokeniza datos sensibles.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cardData:
+                  type: object
+      responses:
+        '200':
+          description: Token generado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+  /detokenize:
+    post:
+      summary: Detokeniza un token y recupera los datos originales.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        '200':
+          description: Datos originales recuperados.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cardData:
+                    type: object
+        '404':
+          description: Token no encontrado.
+  /health:
+    get:
+      summary: Verifica el estado del servicio.
+      responses:
+        '200':
+          description: Servicio operativo.
